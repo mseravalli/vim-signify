@@ -174,6 +174,11 @@ function! s:check_diff_hg(exitval, diff) abort
   return a:exitval ? [0, []] : [1, a:diff]
 endfunction
 
+" s:check_diff_jj {{{1
+function! s:check_diff_jj(exitval, diff) abort
+  return a:exitval ? [0, []] : [1, a:diff]
+endfunction
+
 " s:check_diff_svn {{{1
 function! s:check_diff_svn(exitval, diff) abort
   return a:exitval ? [0, []] : [1, a:diff]
@@ -621,6 +626,7 @@ let s:default_vcs_cmds = {
       \ 'git':      'git diff --no-color --no-ext-diff -U0 -- %f',
       \ 'yadm':     'yadm diff --no-color --no-ext-diff -U0 -- %f',
       \ 'hg':       'hg --config alias.diff=diff diff --color=never --nodates -U0 -- %f',
+      \ 'jj':       "jj --config ui.diff-formatter='[\"diff\", \"--color=never\", \"-U0\", \"-r\", \"$left\", \"$right\"]' --config merge-tools.diff.diff-invocation-mode='file-by-file' diff",
       \ 'svn':      'svn diff --diff-cmd %d -x -U0 -- %f',
       \ 'bzr':      'bzr diff --using %d --diff-options=-U0 -- %f',
       \ 'darcs':    'darcs diff --no-pause-for-gui --no-unified --diff-opts=-U0 -- %f',
@@ -636,6 +642,7 @@ let s:default_vcs_cmds_diffmode = {
       \ 'git':      'git show HEAD:./%f',
       \ 'yadm':     'yadm show HEAD:./%f',
       \ 'hg':       'hg cat %f',
+      \ 'jj':       'jj file show %f',
       \ 'svn':      'svn cat %f',
       \ 'bzr':      'bzr cat %f',
       \ 'darcs':    'darcs show contents -- %f',
